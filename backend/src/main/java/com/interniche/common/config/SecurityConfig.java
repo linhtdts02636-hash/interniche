@@ -1,4 +1,4 @@
-package com.interniche.config;
+package com.interniche.common.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
