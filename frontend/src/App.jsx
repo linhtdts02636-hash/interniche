@@ -1,13 +1,14 @@
-import { useState } from 'react'
+import GuestNavbar from "./components/guest-navbar";
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
     <>
-    <h1>hello wor</h1>
+      <GuestNavbar />
+
+      <main>
+      </main>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
