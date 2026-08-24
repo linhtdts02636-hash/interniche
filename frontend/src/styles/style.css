@@ -1,0 +1,239 @@
+:root {
+  /* ================================
+     base / page
+     ================================ */
+
+  --color-bg: #181818;
+  --color-bg-deep: #0c0c0c;
+  --color-bg-elevated: #1a1a1a;
+
+  /* ================================
+     surfaces
+     ================================ */
+
+  --color-surface: #0d0d0d;
+  --color-surface-raised: #161616;
+  --color-surface-hover: #222222;
+  --color-surface-input: #222222;
+
+  /* ================================
+     borders / dividers
+     ================================ */
+
+  --color-border: #2b2b2b;
+  --color-border-subtle: #403e3e;
+  --color-border-accent: #087ea8;
+
+  /* ================================
+     text
+     ================================ */
+
+  --color-text-primary: #f5f5f5;
+  --color-text-secondary: #b5b5b5;
+  --color-text-muted: #777777;
+  --color-text-disabled: #555555;
+
+  /* ================================
+     primary accent
+     ================================ */
+
+  --color-primary: #10b9f5;
+  --color-primary-hover: #20c4ff;
+  --color-primary-dark: #087fb5;
+  --color-primary-soft: #0d4d68;
+
+  /* ================================
+     secondary accent
+     ================================ */
+
+  --color-secondary: #1c1f24;
+
+  /* ================================
+     gradients
+     ================================ */
+
+  --gradient-primary: linear-gradient(
+    135deg,
+    #5cc9f1,
+    #10b9f5,
+    #2b2b2b,
+    #287cff
+  );
+
+  --gradient-brand: linear-gradient(135deg, #10b9f5, #287cff);
+
+  /* ================================
+     status / semantic colors
+     ================================ */
+
+  --color-success: #36d399;
+  --color-warning: #f5c542;
+  --color-danger: #ff3b4f;
+  --color-info: #10b9f5;
+
+  /* ================================
+     social / interaction
+     ================================ */
+
+  --color-like: #ff3040;
+  --color-notification: #269dff;
+  --color-link: #21b9f5;
+
+  /* ================================
+     overlays
+     ================================ */
+
+  --color-overlay: rgba(0, 0, 0, 0.65);
+  --color-overlay-light: rgba(255, 255, 255, 0.05);
+}
+
+[data-bs-theme="dark"] {
+  --bs-body-bg: var(--color-bg);
+
+  /* 2. Change the default text color */
+  --bs-body-color: var(--color-text-primary);
+  --bs-body-color-rgb: 203, 213, 225;
+
+  /* 3. Change component backgrounds (like Cards, Dropdowns, Modals) */
+  --bs-tertiary-bg: #1e293b;
+
+  /* 4. Change link styles inside dark mode */
+  --bs-link-color: #38bdf8;
+  --bs-link-hover-color: #7dd3fc;
+}
+
+body {
+    background-color: var(--color-bg);
+    color: var(--color-text-primary);
+    overflow-x: hidden;
+    overflow-y: hidden;
+}
+
+.btn:focus,
+.btn:active,
+.btn.show,
+.btn:focus-visible,
+.dropdown-toggle.show {
+  outline: none !important;
+  box-shadow: none !important;
+  border-color: transparent !important; 
+}
+
+.form-control:focus,
+.form-select:focus {
+  outline: 0 !important;
+  box-shadow: none !important;
+}
+
+a {
+  text-decoration: none;
+  color: var(--color-text-primary)
+}
+
+.rounded-gradient-border {
+  border: 1px solid transparent;
+  background-image:
+    linear-gradient(var(--color-bg), var(--color-bg)), var(--gradient-primary);
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+  border-radius: 10px;
+}
+
+.primary-color {
+    background-color: var(--color-primary);
+}
+
+.secondary-color {
+    background-color: var(--color-secondary);
+    background: var(--color-secondary);
+
+}
+
+.sidebar {
+    position: relative;
+    width:200px;
+    height: 100%;
+    position: sticky;
+    overflow-y: auto;
+}
+
+.sidebar-wrapper {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-right: 10px;
+    border-radius: 10px;
+
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
+    padding: px;
+}
+
+.sidebar .nav-link {
+    position: relative;
+    color: var(--text-color);
+}
+
+.sidebar .nav-link::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 50%;
+    width: 4px;
+    height: 0;
+    transform: translateY(-50%);
+    background: var(--bs-primary);
+    border-radius: 0 4px 4px 0;
+    transition: height 0.2s ease;
+}
+
+.sidebar .nav-link.active::before {
+    height: 70%;
+}
+
+.icon-trigger .hover-icon {
+  display: none !important;
+}
+
+.icon-trigger:hover .default-icon {
+  display: none !important;
+}
+.icon-trigger:hover .hover-icon {
+  display: inline-block !important;
+}
+
+
+.main-content {
+    flex: 1;
+    min-width: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+    overflow-wrap: normal;
+word-break: break-word;
+}
+
+.app-body {
+        display: flex;
+    height: calc(100vh - 60px);
+}
+
+.sidebar, .main-content {
+    scrollbar-width: thin;
+    scrollbar-color: transparent transparent;
+}
+
+.sidebar::-webkit-scrollbar, .main-content::-webkit-scrollbar {
+    width: 6px;
+}
+
+.sidebar::-webkit-scrollbar-track, .main-content::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.sidebar::-webkit-scrollbar-thumb, .main-content::-webkit-scrollbar-thumb {
+    background: transparent;
+    border-radius: 999px;
+}
+
+.sidebar:hover::-webkit-scrollbar-thumb, .main-content::-webkit-scrollbar-thumb {
+    background: rgb(255 255 255 / 0%);
+}

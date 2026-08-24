@@ -1,43 +1,45 @@
 import { NavLink } from "react-router-dom";
-import  "../styles/style.css";
+import "../styles/style.css";
+import { Search, Bell, PersonCircle } from "react-bootstrap-icons";
 
 function GuestNavbar() {
   return (
-    <nav className="navbar navbar-expand-lg bg-body-tertiary">
-    <div className="container-fluid">
-    <a className="navbar-brand" href="#">Navbar</a>
-    <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span className="navbar-toggler-icon"></span>
-    </button>
-    <div className="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-        <li className="nav-item">
-          <a className="nav-link active" aria-current="page" href="#">Home</a>
-        </li>
-        <li className="nav-item">
-          <a className="nav-link" href="#">Link</a>
-        </li>
-        <li className="nav-item dropdown">
-          <a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Dropdown
-          </a>
-          <ul className="dropdown-menu">
-            <li><a className="dropdown-item" href="#">Action</a></li>
-            <li><a className="dropdown-item" href="#">Another action</a></li>
-            <li><hr className="dropdown-divider"/></li>
-            <li><a className="dropdown-item" href="#">Something else here</a></li>
-          </ul>
-        </li>
-        <li className="nav-item">
-          <a className="nav-link disabled" aria-disabled="true">Disabled</a>
-        </li>
-      </ul>
-      <form className="d-flex" role="search">
-        <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search"/>
-        <button className="btn btn-outline-success" type="submit">Search</button>
-      </form>
-    </div>
-    </div>
+    <nav
+      className="navbar bg-dark navbar-expand-lg bg-body-tertiary"
+    >
+      <div className="container-fluid">
+        {/* brand section, for interniche logo */}
+        <a className="navbar-brand" href="#">
+          [placeholder logo]
+        </a>
+
+        {/* search bar */}
+        <search>
+          <form
+            className="d-flex position-absolute top-50 start-50 translate-middle w-50 input-group bg-dark rounded-gradient-border"
+            role="search"
+          >
+            <input
+              className="form-control border-0 bg-transparent"
+              type="search"
+              placeholder="Search..."
+              aria-label="Search"
+            />
+            <button className="btn border-0" type="submit">
+              <Search size={18} className="" />
+            </button>
+          </form>
+        </search>
+
+        {/* right-side buttons */}
+        <div className="ms-auto rounded-gradient-border d-flex">
+          {/* sign in button */}
+          <NavLink to="/login" className="btn btn-linkbtn bg-transparent border-0 text-decoration-none">
+            <PersonCircle size={18} className="me-2" />
+            Sign in
+          </NavLink>
+        </div>
+      </div>
     </nav>
   );
 }
