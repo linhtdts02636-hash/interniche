@@ -10,8 +10,10 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "bootstrap": "^5.3.8",
     "firebase": "^12.18.0",
     "react": "^19.2.8",
+    "react-bootstrap-icons": "^1.11.6",
     "react-dom": "^19.2.8",
     "react-router-dom": "^7.18.2"
   },
