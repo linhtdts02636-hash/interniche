@@ -191,3 +191,41 @@ a { text-decoration: none; color: var(--color-text-primary); }
   height: 16px;
   color: var(--color-text-primary);
 }
+
+
+/* CSS cho component Post */
+
+/* CSS cho content */
+.post-content {
+  margin: 0;
+  text-align: justify;
+  line-height: 1.6;
+}
+
+/*CSS hình ảnh post */
+.post-image {
+  display: block; 
+  width: 100%;            /* nếu có bị lỗi hiển thị ảnh thì sửa lại width */
+  max-width: 100%;
+  height: auto;
+  border-radius: 10px;
+}
+
+/* CSS cho nút like và dislike */
+.post-actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.post-action {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+
+  border: none;
+  background: none;
+
+  cursor: pointer;
+}
