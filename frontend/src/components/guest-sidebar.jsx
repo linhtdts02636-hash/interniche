@@ -13,8 +13,7 @@ import {
   HouseDoorFill,
 } from "react-bootstrap-icons";
 
-// Reusable sidebar nav link — swaps between outline/filled icon based on active route
-function UserSideBarLink({ to, icon: Icon, activeIcon: ActiveIcon, text }) {
+function GuestSideBarLink({ to, icon: Icon, activeIcon: ActiveIcon, text }) {
   return (
     <li>
       <NavLink to={to} className="icon-trigger nav-link">
@@ -33,20 +32,16 @@ function UserSideBarLink({ to, icon: Icon, activeIcon: ActiveIcon, text }) {
   );
 }
 
-function UserSidebar() {
-  // collapsed: whether sidebar is fully hidden; persisted via localStorage
+function GuestSidebar() {
   const [collapsed, setCollapsed] = useState(() => {
     return localStorage.getItem("sidebar-collapsed") === "true";
   });
-  // animating: null | "collapsing" | "expanding" — drives the CSS animation class
   const [animating, setAnimating] = useState(null);
 
-  // Persist collapsed state to localStorage on every change
   useEffect(() => {
     localStorage.setItem("sidebar-collapsed", collapsed);
   }, [collapsed]);
 
-  // Guard against rapid clicks mid-animation
   const handleCollapse = useCallback(() => {
     if (animating) return;
     setAnimating("collapsing");
@@ -57,7 +52,6 @@ function UserSidebar() {
     setAnimating("expanding");
   }, [animating]);
 
-  // Finalize collapsed state once the CSS animation finishes
   const handleAnimationEnd = useCallback(() => {
     if (animating === "collapsing") {
       setCollapsed(true);
@@ -67,7 +61,6 @@ function UserSidebar() {
     setAnimating(null);
   }, [animating]);
 
-  // Build class string dynamically based on current animation state
   const wrapperClassName = [
     "sidebar-wrapper secondary-color",
     animating === "collapsing" ? "sidebar-animating sidebar-collapse-anim" : "",
@@ -79,14 +72,12 @@ function UserSidebar() {
 
   return (
     <>
-      {/* Sidebar panel — animates left on collapse, right on expand */}
       <div
         className={wrapperClassName}
         onAnimationEnd={handleAnimationEnd}
       >
         <aside className="sidebar d-none d-sm-block flex-shrink-0">
           <div className="container-fluid">
-            {/* Collapse trigger */}
             <button
               className="btn border-0 w-100 text-end"
               onClick={handleCollapse}
@@ -94,27 +85,26 @@ function UserSidebar() {
             >
               <ArrowLeft />
             </button>
-            {/* Nav links */}
             <ul className="list-unstyled d-flex flex-column gap-3">
-              <UserSideBarLink
+              <GuestSideBarLink
                 to="/home"
                 icon={HouseDoor}
                 activeIcon={HouseDoorFill}
                 text="Home"
               />
-              <UserSideBarLink
+              <GuestSideBarLink
                 to="/notification"
                 icon={Bell}
                 activeIcon={BellFill}
                 text="Notifications"
               />
-              <UserSideBarLink
+              <GuestSideBarLink
                 to="/direct"
                 icon={ChatDots}
                 activeIcon={ChatDotsFill}
                 text="Direct messages"
               />
-              <UserSideBarLink
+              <GuestSideBarLink
                 to="/setting"
                 icon={Gear}
                 activeIcon={GearFill}
@@ -126,7 +116,6 @@ function UserSidebar() {
         </aside>
       </div>
 
-      {/* Expand toggle — fixed on left edge, only visible when sidebar is fully collapsed */}
       {collapsed && !animating && (
         <button
           className="sidebar-expand-btn secondary-color"
@@ -141,4 +130,4 @@ function UserSidebar() {
   );
 }
 
-export default UserSidebar;
+export default GuestSidebar;
