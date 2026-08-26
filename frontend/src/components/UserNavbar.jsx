@@ -1,5 +1,42 @@
+import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { Search, Bell, PersonCircle } from "react-bootstrap-icons";
+
+function Dropdown({ trigger, triggerLabel, children }) {
+  const [open, setOpen] = useState(false);
+  const ref = useRef(null);
+
+  useEffect(() => {
+    function handleClickOutside(e) {
+      if (ref.current && !ref.current.contains(e.target)) {
+        setOpen(false);
+      }
+    }
+    if (open) {
+      document.addEventListener("mousedown", handleClickOutside);
+      return () => document.removeEventListener("mousedown", handleClickOutside);
+    }
+  }, [open]);
+
+  return (
+    <div className="dropdown" ref={ref}>
+      <button
+        className="btn"
+        type="button"
+        aria-expanded={open}
+        aria-label={triggerLabel}
+        onClick={() => setOpen(!open)}
+      >
+        {trigger}
+      </button>
+      {open && (
+        <ul className="dropdown-menu dropdown-menu-end show">
+          {children}
+        </ul>
+      )}
+    </div>
+  );
+}
 
 function UserNavbar() {
   return (
@@ -38,40 +75,18 @@ function UserNavbar() {
           </div>
 
           {/* Notifications dropdown */}
-          <div className="dropdown">
-            <button
-              className="btn"
-              type="button"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
-              aria-label="Notifications"
-            >
-              <Bell size={18} />
-            </button>
-            <ul className="dropdown-menu dropdown-menu-end">
-              <li><a className="dropdown-item" href="#">Test</a></li>
-              <li><a className="dropdown-item" href="#">Test</a></li>
-              <li><a className="dropdown-item" href="#">Test</a></li>
-            </ul>
-          </div>
+          <Dropdown trigger={<Bell size={18} />} triggerLabel="Notifications">
+            <li><a className="dropdown-item" href="#">Test</a></li>
+            <li><a className="dropdown-item" href="#">Test</a></li>
+            <li><a className="dropdown-item" href="#">Test</a></li>
+          </Dropdown>
 
           {/* Profile dropdown */}
-          <div className="dropdown">
-            <button
-              className="btn"
-              type="button"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
-              aria-label="User profile"
-            >
-              <PersonCircle size={18} />
-            </button>
-            <ul className="dropdown-menu dropdown-menu-end">
-              <li><a className="dropdown-item" href="#">Test</a></li>
-              <li><a className="dropdown-item" href="#">Test</a></li>
-              <li><a className="dropdown-item" href="#">Test</a></li>
-            </ul>
-          </div>
+          <Dropdown trigger={<PersonCircle size={18} />} triggerLabel="User profile">
+            <li><a className="dropdown-item" href="#">Test</a></li>
+            <li><a className="dropdown-item" href="#">Test</a></li>
+            <li><a className="dropdown-item" href="#">Test</a></li>
+          </Dropdown>
         </div>
       </div>
     </nav>

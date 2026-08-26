@@ -1,0 +1,1 @@
+this is for storing frontend configurations, such as api routes, firebase api route.

@@ -1,0 +1,1 @@
+this is for storing assets, such as images, videos or gifs.
