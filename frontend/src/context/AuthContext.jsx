@@ -82,7 +82,7 @@ function AuthProvider({ children }) {
         } else {
           setUser(result);
         }
-      } catch (error) {
+      } catch {
         setUser(null);
       } finally {
         setLoading(false);
@@ -112,5 +112,6 @@ function useAuth() {
   return useContext(AuthContext);
 }
 
+// eslint-disable-next-line react-refresh/only-export-components
 export { useAuth };
 export default AuthProvider;

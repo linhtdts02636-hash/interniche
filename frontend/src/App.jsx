@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import AppRoutes from "./router/Routes";
+import AppRoutes from "./router/AppRoutes";
 import AuthProvider from "./context/AuthContext";
 
 function App() {

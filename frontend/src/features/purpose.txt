@@ -1,5 +1,0 @@
-this is storing apis, hooks, components specialized 
-for a function or feature of the website.
-
-Not to be confused with components/, which is for general components shared
-across the website.

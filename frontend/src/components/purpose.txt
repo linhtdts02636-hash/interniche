@@ -1,3 +1,0 @@
-this is for storing general components shared across the website.
-not to be confused with features' components, they are for storing specialized
-components for features that dont share with each other.
