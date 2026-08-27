@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
+import { NavLink } from "react-router-dom";
 
-function Post({ createdAt, content, image }) {
+function Post({ postId,createdAt, content, image, likeCount, dislikeCount }) {
   // Thời gian đăng bài
   const [timeAgo, setTimeAgo] = useState(getTimeAgo(createdAt));
 
@@ -22,31 +23,64 @@ function Post({ createdAt, content, image }) {
   const [isDisliked, setIsDisliked] = useState(false);
 
   const handleLike = () => {
-    setLikes(likes + 1);
-  }; // Làm nút like hoạt động
+    if (isLiked) {
+      setLikes((prevLikes) => prevLikes - 1);
+      setIsLiked(false);
+    } else {
+      setLikes((prevLikes) => prevLikes + 1);
+      setIsLiked(true);
+
+      if (isDisliked) {
+        setDislikes((prevDislikes) => prevDislikes - 1);
+        setIsDisliked(false);
+      }
+    }
+  };
 
   const handleDislike = () => {
-    setDislikes(dislikes + 1);
+    if (isDisliked) {
+      setDislikes((prevDislikes) => prevDislikes - 1);
+      setIsDisliked(false);
+    } else {
+      setDislikes((prevDislikes) => prevDislikes + 1);
+      setIsDisliked(true);
+
+      if (isLiked) {
+        setLikes((prevLikes) => prevLikes - 1);
+        setIsLiked(false);
+      }
+    }
   };
 
   // Phần dữ liệu đc trả về hiển thị trên mỗi component
   return (
     <article className="post">
       <span className="post-time">{timeAgo}</span>
-
       <p className="post-content">{content}</p>
-
+      // Tùy chọn bài đăng có hình ảnh hay không.
       {image && <img src={image} alt="Post" className="post-image" />}
+      // Phần like / dislike
+      <div className="post-actions">
+        <button
+          className={`post-action ${isLiked ? "active" : ""}`}
+          onClick={handleLike}
+        >
+          👍
+          <span>{likes}</span>
+        </button>
 
-      <button className="post-action" onClick={handleLike}>
-        👍
-        <span>{likes}</span>
-      </button>
+        <button
+          className={`post-action ${isDisliked ? "active" : ""}`}
+          onClick={handleDislike}
+        >
+          👎
+          <span>{dislikes}</span>
+        </button>
 
-      <button className="post-action" onClick={handleDislike}>
-        👎
-        <span>{dislikes}</span>
-      </button>
+        <NavLink to={`/posts/${postId}/comments`} className="post-action">
+          comment
+        </NavLink>
+      </div>
     </article>
   );
 }
