@@ -1,19 +1,9 @@
 import { NavLink } from "react-router-dom";
 import { useState, useEffect, useCallback } from "react";
-import {
-  ChatDots,
-  ChatDotsFill,
-  Gear,
-  GearFill,
-  Bell,
-  BellFill,
-  ArrowLeft,
-  ArrowRight,
-  HouseDoor,
-  HouseDoorFill,
-} from "react-bootstrap-icons";
+import { ArrowLeft, ArrowRight } from "react-bootstrap-icons";
 
-function GuestSideBarLink({ to, icon: Icon, activeIcon: ActiveIcon, text }) {
+// Reusable sidebar nav link — swaps between outline/filled icon based on active route
+function SidebarLink({ to, icon: Icon, activeIcon: ActiveIcon, text }) {
   return (
     <li>
       <NavLink to={to} className="icon-trigger nav-link">
@@ -32,16 +22,22 @@ function GuestSideBarLink({ to, icon: Icon, activeIcon: ActiveIcon, text }) {
   );
 }
 
-function GuestSidebar() {
+// Parameterized sidebar — accepts a `links` array of
+// { to, icon, activeIcon, text }. Always renders the collapse/expand chrome.
+function Sidebar({ links }) {
+  // collapsed: whether sidebar is fully hidden; persisted via localStorage
   const [collapsed, setCollapsed] = useState(() => {
     return localStorage.getItem("sidebar-collapsed") === "true";
   });
+  // animating: null | "collapsing" | "expanding" — drives the CSS animation class
   const [animating, setAnimating] = useState(null);
 
+  // Persist collapsed state to localStorage on every change
   useEffect(() => {
     localStorage.setItem("sidebar-collapsed", collapsed);
   }, [collapsed]);
 
+  // Guard against rapid clicks mid-animation
   const handleCollapse = useCallback(() => {
     if (animating) return;
     setAnimating("collapsing");
@@ -52,6 +48,7 @@ function GuestSidebar() {
     setAnimating("expanding");
   }, [animating]);
 
+  // Finalize collapsed state once the CSS animation finishes
   const handleAnimationEnd = useCallback(() => {
     if (animating === "collapsing") {
       setCollapsed(true);
@@ -61,6 +58,7 @@ function GuestSidebar() {
     setAnimating(null);
   }, [animating]);
 
+  // Build class string dynamically based on current animation state
   const wrapperClassName = [
     "sidebar-wrapper secondary-color",
     animating === "collapsing" ? "sidebar-animating sidebar-collapse-anim" : "",
@@ -72,12 +70,11 @@ function GuestSidebar() {
 
   return (
     <>
-      <div
-        className={wrapperClassName}
-        onAnimationEnd={handleAnimationEnd}
-      >
+      {/* Sidebar panel — animates left on collapse, right on expand */}
+      <div className={wrapperClassName} onAnimationEnd={handleAnimationEnd}>
         <aside className="sidebar d-none d-sm-block flex-shrink-0">
           <div className="container-fluid">
+            {/* Collapse trigger */}
             <button
               className="btn border-0 w-100 text-end"
               onClick={handleCollapse}
@@ -85,37 +82,18 @@ function GuestSidebar() {
             >
               <ArrowLeft />
             </button>
+            {/* Nav links */}
             <ul className="list-unstyled d-flex flex-column gap-3">
-              <GuestSideBarLink
-                to="/home"
-                icon={HouseDoor}
-                activeIcon={HouseDoorFill}
-                text="Home"
-              />
-              <GuestSideBarLink
-                to="/notification"
-                icon={Bell}
-                activeIcon={BellFill}
-                text="Notifications"
-              />
-              <GuestSideBarLink
-                to="/direct"
-                icon={ChatDots}
-                activeIcon={ChatDotsFill}
-                text="Direct messages"
-              />
-              <GuestSideBarLink
-                to="/setting"
-                icon={Gear}
-                activeIcon={GearFill}
-                text="Settings"
-              />
+              {links.map((link) => (
+                <SidebarLink key={link.to} {...link} />
+              ))}
               <hr />
             </ul>
           </div>
         </aside>
       </div>
 
+      {/* Expand toggle — fixed on left edge, only visible when sidebar is fully collapsed */}
       {collapsed && !animating && (
         <button
           className="sidebar-expand-btn secondary-color"
@@ -130,4 +108,4 @@ function GuestSidebar() {
   );
 }
 
-export default GuestSidebar;
+export default Sidebar;
