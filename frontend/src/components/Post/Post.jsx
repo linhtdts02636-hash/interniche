@@ -57,9 +57,8 @@ function Post({ postId,createdAt, content, image, likeCount, dislikeCount }) {
     <article className="post">
       <span className="post-time">{timeAgo}</span>
       <p className="post-content">{content}</p>
-      // Tùy chọn bài đăng có hình ảnh hay không.
+
       {image && <img src={image} alt="Post" className="post-image" />}
-      // Phần like / dislike
       <div className="post-actions">
         <button
           className={`post-action ${isLiked ? "active" : ""}`}
