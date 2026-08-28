@@ -130,6 +130,10 @@ a { text-decoration: none; color: var(--color-text-primary); }
   overflow-y: auto;
   overflow-x: hidden;
   word-break: break-word;
+
+  /* Tạo khoảng cách giữa sidebar và bài post */
+  padding: 20px;
+  box-sizing: border-box;
 }
 
 .sidebar, .main-content {
@@ -189,5 +193,127 @@ a { text-decoration: none; color: var(--color-text-primary); }
 .sidebar-expand-btn svg {
   width: 16px;
   height: 16px;
+  color: var(--color-text-primary);
+}
+
+
+/* CSS cho component Post */
+/* Container của Post */
+.post {
+  width: 70%;
+  padding: 20px;
+  margin-bottom: 20px;
+
+  background-color: var(--color-surface-raised);
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+
+  box-sizing: border-box;
+}
+
+.post-time {
+  display: block;
+  margin-bottom: 10px;
+
+  color: var(--color-text-muted);
+  font-size: 14px;
+}
+
+/* CSS cho content */
+.post-content {
+  margin: 0 0 16px;
+  text-align: justify;
+  line-height: 1.6;
+  color: var(--color-text-primary);
+}
+
+/*CSS hình ảnh post */
+/* .post-image {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+
+  border-radius: 10px;
+  object-fit: contain;
+} */
+
+/* .post-image {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 500px;
+  object-fit: contain;
+  border-radius: 10px;
+} */
+
+/* Khung chứa ảnh */
+/* .post-image-wrapper {
+  width: 100%;
+  max-height: 500px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  overflow: hidden;
+  border-radius: 10px;
+
+  margin-top: 12px;
+}
+
+/* Ảnh */
+.post-image {
+  display: block;
+
+  width: 100%;
+  height: auto;
+
+  max-height: 500px;
+
+  object-fit: contain;
+
+  border-radius: 10px;
+} */
+
+.post-image {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+  margin-top: 12px;
+}
+/* CSS cho nút like và dislike */
+.post-actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.post-action {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+
+  padding: 6px 8px;
+
+  border: none;
+  border-radius: 6px;
+  background: none;
+
+  color: var(--color-text-secondary);
+  text-decoration: none;
+
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.post-action.active {
+  font-weight: bold;
+}
+
+.post-action:hover {
+  background-color: var(--color-surface-hover);
   color: var(--color-text-primary);
 }
