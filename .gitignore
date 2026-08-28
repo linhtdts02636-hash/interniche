@@ -56,3 +56,10 @@ build/
 
 ### VS Code ###
 .vscode/
+
+# --- interniche secrets (do not commit) ---
+backend/src/main/resources/application.properties
+backend/src/main/resources/secrets/
+**/firebase-service-account*.json
+**/*service-account*.json
+*.env
