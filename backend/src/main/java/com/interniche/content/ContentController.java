@@ -1,11 +1,10 @@
 package com.interniche.content;
 
 import com.interniche.common.exception.UnauthorizedException;
+import com.interniche.content.dto.CreateContentRequest;
+import com.interniche.content.dto.UpdateContentRequest;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -30,19 +29,6 @@ public class ContentController {
     public ContentController(ContentService contentService) {
         this.contentService = contentService;
     }
-
-    // DTO tạo post — nichId + contType bắt buộc để biết đăng vào niche nào, loại gì
-    public record CreateContentRequest(
-            @NotBlank @Size(max = 100) String contTitle, // khớp VARCHAR(100) của cont_title
-            @NotBlank String contBody, // MEDIUMTEXT không giới hạn nhưng vẫn @NotBlank để tránh rỗng
-            @NotNull ContentType contType, // post hoặc creation — @NotNull khác @NotBlank (enum không phải chuỗi rỗng)
-            @NotNull Integer nichId) {}
-
-    // DTO sửa post — tất cả optional, chỉ gửi field muốn đổi
-    public record UpdateContentRequest(
-            @Size(max = 100) String contTitle,
-            String contBody,
-            ContentType contType) {}
 
     @PostMapping
     public Content create(@Valid @RequestBody CreateContentRequest request, HttpSession session) {

@@ -1,10 +1,10 @@
 package com.interniche.niche;
 
 import com.interniche.common.exception.UnauthorizedException;
+import com.interniche.niche.dto.CreateNicheRequest;
+import com.interniche.niche.dto.UpdateNicheRequest;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,20 +28,6 @@ public class NicheController {
     public NicheController(NicheService nicheService) {
         this.nicheService = nicheService;
     }
-
-    // @NotBlank: không cho rỗng / toàn khoảng trắng — khác @NotNull (cho phép "")
-    // @Size(max=50): khớp VARCHAR(50) của nich_name trong DDL
-    public record CreateNicheRequest(
-            @NotBlank @Size(max = 50) String nichName,
-            String nichBanner,
-            String nichAvatar,
-            Boolean nichIsPublic) {}
-
-    public record UpdateNicheRequest(
-            @Size(max = 50) String nichName,
-            String nichBanner,
-            String nichAvatar,
-            Boolean nichIsPublic) {}
 
     @PostMapping
     public Niche create(@Valid @RequestBody CreateNicheRequest request, HttpSession session) {
