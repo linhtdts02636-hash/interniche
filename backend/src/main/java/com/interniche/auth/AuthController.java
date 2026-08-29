@@ -1,10 +1,11 @@
 package com.interniche.auth;
 
+import com.interniche.auth.dto.ClientErrorRequest;
+import com.interniche.auth.dto.LoginRequest;
+import com.interniche.auth.dto.RegisterRequest;
 import com.interniche.common.exception.UnauthorizedException;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
@@ -32,21 +33,8 @@ public class AuthController {
         this.authService = authService;
     }
 
-    // record = DTO bất biến, gọn hơn class thường.
-    // @NotBlank: chuỗi không được null / rỗng / toàn khoảng trắng (khác @NotNull và @NotEmpty)
-    // @Size(max = 50): khớp giới hạn VARCHAR(50) của cột user_name trong DB
-    // Các annotation này CHỈ chạy khi có @Valid ở parameter phía dưới — không có @Valid thì bị bỏ qua!
-    public record RegisterRequest(
-            @NotBlank String idToken,
-            @NotBlank @Size(max = 50) String username) {}
-
-    public record LoginRequest(@NotBlank String idToken) {}
-
-    public record ClientErrorRequest(@NotBlank String code, String message) {}
-    // message để được null (frontend có thể không gửi) — chỉ code là bắt buộc
-
-    // @RequestBody: đọc JSON từ body -> Jackson tự map vào record
-    // @Valid: kích hoạt validation ở trên; sai -> MethodArgumentNotValidException -> GlobalExceptionHandler trả 400
+    // @RequestBody: đọc JSON từ body -> Jackson tự map vào DTO
+    // @Valid: kích hoạt validation trong DTO (@NotBlank...); sai -> MethodArgumentNotValidException -> GlobalExceptionHandler trả 400
     // HttpSession: Spring tạo/lấy session sẵn; Tomcat gửi cookie JSESSIONID về client
     @PostMapping("/register")
     public Map<String, Object> register(@Valid @RequestBody RegisterRequest request, HttpSession session) {
