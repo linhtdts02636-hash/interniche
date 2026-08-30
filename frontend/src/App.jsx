@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import AppRoutes from "./router/AppRoutes";
 import AuthProvider from "./context/AuthContext";
 
+
 function App() {
   useEffect(() => {
     document.documentElement.setAttribute("data-bs-theme", "dark");
@@ -14,6 +15,7 @@ function App() {
       </AuthProvider>
     </>
   );
+
 }
 
 export default App;
