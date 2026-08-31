@@ -1,8 +1,10 @@
+import ContentList from "../../features/content/components/ContentList";
+
 function DiscoveryPage() {
   return (
-    <div className="container">
-      <main className="main-content"></main>
-    </div>
+<>
+<ContentList></ContentList>
+</>
   );
 }
 

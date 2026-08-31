@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Twitter UI Vector Layout</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+    :root {
+      --bg-canvas: #62a2cc;
+      --bg-app: #f0f7fc;
+      --bg-card: #ffffff;
+      --bg-media: #cce5f3;
+      --blue-primary: #00a2ed;
+      --border-dark: #1e293b; /* Dark slate border color */
+      --text-dark: #1e293b;
+      --text-muted: #64748b;
+      --radius-lg: 24px;
+      --radius-md: 16px;
+      --radius-sm: 10px;
+      --radius-pill: 50px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Inter', sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-canvas);
+      padding: 30px 15px;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    /* Outer Wrapper Container */
+    .app-frame {
+      width: 100%;
+      max-width: 1100px;
+      background: var(--bg-app);
+      border: 3px solid var(--border-dark);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      box-shadow: 4px 6px 0px var(--border-dark);
+      display: grid;
+      grid-template-columns: 220px 1fr 260px;
+      gap: 20px;
+    }
+
+    /* Utility Cards */
+    .card {
+      background: var(--bg-card);
+      border: 2px solid var(--border-dark);
+      border-radius: var(--radius-md);
+      padding: 16px;
+      margin-bottom: 16px;
+      box-shadow: 2px 2px 0px var(--border-dark);
+    }
+
+    /* 1. LEFT NAVIGATION SIDEBAR */
+    .nav-logo {
+      font-size: 24px;
+      color: var(--blue-primary);
+      padding: 0 12px 16px;
+    }
+
+    .nav-menu {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 16px;
+      border-radius: var(--radius-pill);
+      color: var(--text-muted);
+      font-weight: 600;
+      font-size: 14px;
+      cursor: pointer;
+      border: 2px solid transparent;
+    }
+
+    .nav-item.active {
+      background: var(--blue-primary);
+      color: white;
+      border: 2px solid var(--border-dark);
+      box-shadow: 2px 2px 0px var(--border-dark);
+    }
+
+    .tweet-btn-large {
+      width: 100%;
+      background: var(--blue-primary);
+      color: white;
+      border: 2px solid var(--border-dark);
+      padding: 12px;
+      border-radius: var(--radius-pill);
+      font-weight: 700;
+      font-size: 14px;
+      margin-top: 16px;
+      cursor: pointer;
+      box-shadow: 2px 2px 0px var(--border-dark);
+    }
+
+    .tweet-btn-large:active {
+      transform: translate(1px, 1px);
+      box-shadow: 1px 1px 0px var(--border-dark);
+    }
+
+    .user-pill-card {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px;
+      border-radius: var(--radius-pill);
+      background: white;
+      border: 2px solid var(--border-dark);
+      margin-top: 20px;
+      box-shadow: 2px 2px 0px var(--border-dark);
+    }
+
+    .avatar-sm {
+      width: 36px;
+      height: 36px;
+      background: var(--blue-primary);
+      border: 2px solid var(--border-dark);
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    /* 2. MAIN FEED COLUMN */
+    .feed-header {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--blue-primary);
+      margin-bottom: 16px;
+    }
+
+    .compose-card {
+      display: flex;
+      gap: 12px;
+    }
+
+    .compose-right {
+      flex-grow: 1;
+    }
+
+    .compose-tools {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 16px;
+    }
+
+    .icons-group {
+      display: flex;
+      gap: 10px;
+      color: var(--blue-primary);
+      font-size: 14px;
+    }
+
+    .btn-sm {
+      background: var(--blue-primary);
+      color: white;
+      border: 2px solid var(--border-dark);
+      padding: 6px 18px;
+      border-radius: var(--radius-pill);
+      font-weight: 700;
+      font-size: 12px;
+      cursor: pointer;
+      box-shadow: 2px 2px 0px var(--border-dark);
+    }
+
+    .btn-sm:active {
+      transform: translate(1px, 1px);
+      box-shadow: 0px 0px 0px var(--border-dark);
+    }
+
+    .post-card {
+      display: flex;
+      gap: 12px;
+    }
+
+    .post-content {
+      flex: 1;
+    }
+
+    .post-header-info {
+      display: flex;
+      gap: 6px;
+      font-size: 13px;
+      margin-bottom: 6px;
+    }
+
+    .post-name {
+      font-weight: 700;
+      color: var(--blue-primary);
+    }
+
+    .post-handle {
+      color: var(--text-muted);
+    }
+
+    .post-body {
+      font-size: 13px;
+      color: var(--text-dark);
+      line-height: 1.4;
+      margin-bottom: 12px;
+    }
+
+    .media-box {
+      width: 100%;
+      height: 140px;
+      background: var(--bg-media);
+      border: 2px solid var(--border-dark);
+      border-radius: var(--radius-md);
+      margin-top: 10px;
+    }
+
+    .post-actions {
+      display: flex;
+      gap: 24px;
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-top: 10px;
+    }
+
+    /* 3. RIGHT WIDGET SIDEBAR */
+    .search-bar {
+      background: var(--blue-primary);
+      border: 2px solid var(--border-dark);
+      border-radius: var(--radius-pill);
+      padding: 8px 16px;
+      color: white;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      margin-bottom: 16px;
+      box-shadow: 2px 2px 0px var(--border-dark);
+    }
+
+    .search-input {
+      background: transparent;
+      border: none;
+      outline: none;
+      color: white;
+      width: 100%;
+    }
+
+    .search-input::placeholder {
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    .media-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 6px;
+    }
+
+    .grid-square {
+      aspect-ratio: 1;
+      background: var(--bg-media);
+      border: 2px solid var(--border-dark);
+      border-radius: var(--radius-sm);
+    }
+
+    .widget-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--blue-primary);
+      margin-bottom: 12px;
+    }
+
+    .follow-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+
+    .follow-user {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .news-item {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    .news-thumb {
+      width: 48px;
+      height: 48px;
+      background: var(--bg-media);
+      border: 2px solid var(--border-dark);
+      border-radius: var(--radius-sm);
+      flex-shrink: 0;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 900px) {
+      .app-frame {
+        grid-template-columns: 80px 1fr;
+      }
+      .right-sidebar { display: none; }
+      .nav-item span, .user-info { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="app-frame">
+
+    <aside class="left-sidebar">
+      <div class="nav-logo">🐦</div>
+      <ul class="nav-menu">
+        <li class="nav-item active">🏠 <span>Home</span></li>
+        <li class="nav-item">🔍 <span>Explore</span></li>
+        <li class="nav-item">🔔 <span>Notifications</span></li>
+        <li class="nav-item">✉️ <span>Messages</span></li>
+        <li class="nav-item">🔖 <span>Bookmarks</span></li>
+        <li class="nav-item">📄 <span>List</span></li>
+        <li class="nav-item">👤 <span>Profile</span></li>
+        <li class="nav-item">💬 <span>More</span></li>
+      </ul>
+      <button class="tweet-btn-large">Tweet</button>
+
+      <div class="user-pill-card">
+        <div class="avatar-sm"></div>
+        <div class="user-info" style="font-size: 12px;">
+          <div style="font-weight: 700; color: var(--text-dark);">User Name</div>
+          <div style="color: var(--text-muted);">@username</div>
+        </div>
+      </div>
+    </aside>
+
+    <main class="feed-column">
+      <div class="feed-header">Home</div>
+
+      <div class="card compose-card">
+        <div class="avatar-sm"></div>
+        <div class="compose-right">
+          <div style="color: var(--text-muted); font-size: 14px;">What's happening?</div>
+          <div class="compose-tools">
+            <div class="icons-group">🖼️ 👾 📊 📑 📅</div>
+            <button class="btn-sm">Tweet</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card post-card">
+        <div class="avatar-sm"></div>
+        <div class="post-content">
+          <div class="post-header-info">
+            <span class="post-name">James L.</span>
+            <span class="post-handle">@jamesL23 · Aug 8, 2026</span>
+          </div>
+          <p class="post-body">
+            Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore.
+          </p>
+          <div class="post-actions">
+            <span>💬</span> <span>🔄</span> <span>❤️</span> <span>📤</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card post-card">
+        <div class="avatar-sm"></div>
+        <div class="post-content">
+          <div class="post-header-info">
+            <span class="post-name">Michael R.</span>
+            <span class="post-handle">@mich23 · Aug 3, 2026</span>
+          </div>
+          <p class="post-body">
+            Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore.
+          </p>
+          <div class="media-box"></div>
+          <div class="post-actions">
+            <span>💬</span> <span>🔄</span> <span>❤️</span> <span>📤</span>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <aside class="right-sidebar">
+      <div class="search-bar">
+        <span>🔍</span>
+        <input type="text" class="search-input" placeholder="Search..." />
+      </div>
+
+      <div class="card">
+        <div class="media-grid">
+          <div class="grid-square"></div>
+          <div class="grid-square"></div>
+          <div class="grid-square"></div>
+          <div class="grid-square"></div>
+          <div class="grid-square"></div>
+          <div class="grid-square"></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="widget-title">You might like</div>
+        
+        <div class="follow-item">
+          <div class="follow-user">
+            <div class="avatar-sm" style="width: 28px; height: 28px;"></div>
+            <div style="font-size: 11px;">
+              <div style="font-weight: 700; color: var(--text-dark);">Osmar R.</div>
+              <div style="color: var(--text-muted);">@Osmar</div>
+            </div>
+          </div>
+          <button class="btn-sm" style="padding: 4px 12px; font-size: 10px;">Follow</button>
+        </div>
+
+        <div class="follow-item">
+          <div class="follow-user">
+            <div class="avatar-sm" style="width: 28px; height: 28px;"></div>
+            <div style="font-size: 11px;">
+              <div style="font-weight: 700; color: var(--text-dark);">Chris Brain</div>
+              <div style="color: var(--text-muted);">@ChrisBlue</div>
+            </div>
+          </div>
+          <button class="btn-sm" style="padding: 4px 12px; font-size: 10px;">Follow</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="widget-title">What's happening</div>
+        
+        <div class="news-item">
+          <div>
+            <div style="font-size: 10px; color: var(--text-muted);">China · July 30, 2026</div>
+            <div style="font-size: 11px; font-weight: 600; color: var(--text-dark); line-height: 1.3;">
+              Lorem ipsum dolor sit amet, consectetur...
+            </div>
+          </div>
+          <div class="news-thumb"></div>
+        </div>
+      </div>
+    </aside>
+
+  </div>
+
+</body>
+</html>
