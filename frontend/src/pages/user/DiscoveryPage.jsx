@@ -1,8 +1,13 @@
+import Avatar from "../../components/avatar/Avatar";
+import portrait from "./portrait.jpg"
+
 function DiscoveryPage() {
   return (
-    <div className="container">
-      <main className="main-content"></main>
-    </div>
+<Avatar
+type="user"
+src={portrait}
+></Avatar>
+
   );
 }
 
