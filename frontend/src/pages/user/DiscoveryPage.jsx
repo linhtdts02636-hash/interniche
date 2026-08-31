@@ -1,13 +1,10 @@
-import Avatar from "../../components/avatar/Avatar";
-import portrait from "./portrait.jpg"
+import ContentList from "../../features/content/components/ContentList";
 
 function DiscoveryPage() {
   return (
-<Avatar
-type="user"
-src={portrait}
-></Avatar>
-
+<>
+<ContentList></ContentList>
+</>
   );
 }
 

@@ -43,3 +43,15 @@ export async function apiPatch(path, body) {
 
   return data;
 }
+
+export async function apiPut(path, body) {
+  const res = await fetch(API_BASE + path, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    credentials: "include",
+    body: JSON.stringify(body),
+  });
+  const data = await res.json();
+
+  return data;
+}
