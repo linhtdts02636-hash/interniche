@@ -1,11 +1,18 @@
 package com.interniche.content;
 
-import com.interniche.common.exception.NotFoundException;
-import com.interniche.common.exception.UnauthorizedException;
-import com.interniche.niche.NicheDAO;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
 import org.springframework.stereotype.Service;
+
+import com.interniche.common.exception.NotFoundException;
+import com.interniche.common.exception.UnauthorizedException;
+import com.interniche.content.dto.ContentWithAuthor;
+import com.interniche.niche.NicheDAO;
+import com.interniche.user.User;
+import com.interniche.user.UserDAO;
 
 // Service xử lý logic tạo/sửa/xoá post (content)
 @Service
@@ -13,10 +20,13 @@ public class ContentService {
 
     private final ContentDAO contentDAO;
     private final NicheDAO nicheDAO;
+    private final UserDAO userDAO;
+    
 
-    public ContentService(ContentDAO contentDAO, NicheDAO nicheDAO) {
+    public ContentService(ContentDAO contentDAO, NicheDAO nicheDAO, UserDAO userDAO) {
         this.contentDAO = contentDAO;
         this.nicheDAO = nicheDAO;
+        this.userDAO = userDAO;
     }
 
     // Tạo post/creation — Yêu cầu 3: cont_type do client gửi ('post' hoặc 'creation')
@@ -37,13 +47,23 @@ public class ContentService {
         return contentDAO.save(content);
     }
 
-    public List<Content> listByNiche(Integer nichId) {
-        return contentDAO.findByNichId(nichId);
+    public List<ContentWithAuthor> listByNiche(Integer nichId) {
+    return contentDAO.findByNichId(nichId).stream()
+        .map(c -> new ContentWithAuthor(c, userDAO.findByUserId(c.getUserId()).orElse(null)))
+        .toList();
     }
 
-    public List<Content> listAll() {
-        return contentDAO.findAll();
-    }
+
+    public List<ContentWithAuthor> listAll() {
+    List<Content> contents = contentDAO.findAll();
+    List<Integer> ids = contents.stream().map(Content::getUserId).distinct().toList();
+    Map<Integer, User> users = userDAO.findAllById(ids).stream()
+        .collect(Collectors.toMap(User::getUserId, u -> u));
+    return contents.stream()
+        .map(c -> new ContentWithAuthor(c, users.get(c.getUserId())))
+        .toList();
+
+}
 
     public Content getById(Integer contId) {
         return contentDAO.findById(contId)
@@ -82,4 +102,5 @@ public class ContentService {
             throw new UnauthorizedException("Only the author can edit this content");
         }
     }
+
 }

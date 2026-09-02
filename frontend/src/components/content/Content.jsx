@@ -1,13 +1,29 @@
 import { NavLink } from "react-router-dom";
 import TimeAgo from "../TimeAgo";
 import Reactions from "../Reactions";
+import Avatar from "../avatar/Avatar";
 
-function Content({ contentId, createdAt, title, body, image, likeCount, dislikeCount }) {
+function Content({
+  contentId,
+  createdAt,
+  title,
+  body,
+  image, //not implemented yet
+  likeCount, //not implemented yet
+  dislikeCount, //not implemented yet
+}) {
   return (
-    <article className="post rounded-gradient-border ">
-      <TimeAgo createdAt={createdAt} />
-      <h3>{title}</h3>
-      <p className="post-content">{body}</p>
+    <NavLink to={`/post/${contentId}`}>
+<article className="post rounded-gradient-border ">
+      <div className="content-header">
+        <Avatar id={2} isUser={false} name="username" isAdmin={true} />
+        <TimeAgo createdAt={createdAt} />
+      </div>
+
+      <div className="post-content mt-3">
+        <p>{title}</p>
+        <p >{body}</p>
+      </div>
 
       {image && <img src={image} alt="Content" className="post-image" />}
 
@@ -19,6 +35,8 @@ function Content({ contentId, createdAt, title, body, image, likeCount, dislikeC
         </NavLink>
       </div>
     </article>
+    </NavLink>
+    
   );
 }
 
