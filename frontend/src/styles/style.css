@@ -246,7 +246,7 @@ a { text-decoration: none; color: var(--color-text-primary); }
 /* CSS cho content */
 .content-content {
   text-align: justify;
-  line-height:0.7;
+  line-height:1.2;
   color: var(--color-text-primary);
 }
 

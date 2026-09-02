@@ -1,57 +1,37 @@
 const API_BASE = "http://localhost:8080";
-export async function apiPost(path, body) {
+
+async function request(path, method, body) {
   const res = await fetch(API_BASE + path, {
-    method: "POST",
+    method,
     headers: { "Content-Type": "application/json" },
     credentials: "include",
-    body: JSON.stringify(body),
+    body: body !== undefined ? JSON.stringify(body) : undefined,
   });
-  const data = await res.json();
 
-  return data;
+  if (!res.ok) {
+    throw new Error(`Request failed: ${res.status} ${res.statusText}`);
+  }
+
+  const text = await res.text();
+  return text ? JSON.parse(text) : null;
+}
+
+export async function apiPost(path, body) {
+  return request(path, "POST", body);
 }
 
 export async function apiGet(path) {
-  const res = await fetch(API_BASE + path, {
-    method: "GET",
-    headers: { "Content-Type": "application/json" },
-    credentials: "include",
-  });
-  const data = await res.json();
-
-  return data;
+  return request(path, "GET");
 }
+
 export async function apiDelete(path, body) {
-  const res = await fetch(API_BASE + path, {
-    method: "DELETE",
-    headers: { "Content-Type": "application/json" },
-    credentials: "include",
-    body: JSON.stringify(body),
-  });
-  const data = await res.json();
-
-  return data;
+  return request(path, "DELETE", body);
 }
-export async function apiPatch(path, body) {
-  const res = await fetch(API_BASE + path, {
-    method: "PATCH",
-    headers: { "Content-Type": "application/json" },
-    credentials: "include",
-    body: JSON.stringify(body),
-  });
-  const data = await res.json();
 
-  return data;
+export async function apiPatch(path, body) {
+  return request(path, "PATCH", body);
 }
 
 export async function apiPut(path, body) {
-  const res = await fetch(API_BASE + path, {
-    method: "PUT",
-    headers: { "Content-Type": "application/json" },
-    credentials: "include",
-    body: JSON.stringify(body),
-  });
-  const data = await res.json();
-
-  return data;
+  return request(path, "PUT", body);
 }

@@ -15,7 +15,7 @@ function ContentList({ nichId }) {
   return (
     <div>
       <div>
-        <button type="button" onClick={() => setIsContentCreateOpen(true)}>
+        <button type="button" className="btn" onClick={() => setIsContentCreateOpen(true)}>
           +
         </button>
 

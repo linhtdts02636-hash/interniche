@@ -4,6 +4,8 @@ import Avatar from "../avatar/Avatar";
 import "../../styles/style.css";
 import "../../styles/ContentCreate.css";
 
+const titleMax= 100;
+
 function ContentCreate({ isOpen, onClose, nichId, editContent, create, edit }) {
   const isEdit = !!editContent;
   const [body, setContent] = useState(
@@ -54,16 +56,25 @@ function ContentCreate({ isOpen, onClose, nichId, editContent, create, edit }) {
           </button>
         </div>
 
-        <div className="content-create-body d-flex flex-column">
-          <div className="content-create-input d-flex gap-3">
-            <Avatar />
+        <div className="content-create-body">
+          <div className="content-create-input d-flex gap-2">
+            <Avatar isUser={true} className="mt-2"/>
 
-            <textarea
-              className="form-control"
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-              placeholder="What's happening?"
-            />
+            <div className="content-create-title-wrap">
+              <textarea
+                className="form-control content-create-title"
+                value={title}
+                onChange={(e) => setTitle(e.target.value.slice(0, titleMax))}
+                placeholder="What are you posting about?"
+              />
+              <span
+                className={`content-create-title-counter ${
+                  title.length >= titleMax? "near-limit" : ""
+                }`}
+              >
+                {title.length}/{titleMax}
+              </span>
+            </div>
           </div>
 
           <div className="content-create-input d-flex gap-3">
@@ -71,7 +82,7 @@ function ContentCreate({ isOpen, onClose, nichId, editContent, create, edit }) {
               className="form-control"
               value={body}
               onChange={(e) => setContent(e.target.value)}
-              placeholder="Des"
+              placeholder="Share with everyone about your day..."
             />
           </div>
 

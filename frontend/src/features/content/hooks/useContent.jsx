@@ -46,7 +46,8 @@ function useContent() {
 
   const remove = async (id) => {
     await deleteContentById(id);
-    setContents((prev) => prev.filter((item) => item.content.contId !== id));
+    await reload();
+
   };
 
   return { contents, loading, create, edit, remove };
