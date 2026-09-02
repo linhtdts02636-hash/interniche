@@ -78,9 +78,9 @@ function Content({
         )}
       </div>
 
-      <div className="content-content mt-3">
-        <p>{content.contTitle}</p>
-        <p>{content.contBody}</p>
+      <div className="mt-3">
+        <p className="content-content" >{content.contTitle}</p>
+        <p className="content-content">{content.contBody}</p>
       </div>
 
       {image && <img src={image} alt="Content" className="content-image" />}
