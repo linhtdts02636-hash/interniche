@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>doodle_feed.exe</title>
+  <style>
+    /* Google Fonts with a handwritten / sketch vibe */
+    @import url('https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap');
+
+    :root {
+      --bg-color: #f3f3ee;
+      --doodle-blue: #235284;
+      --doodle-light: #e6eef7;
+      --white: #ffffff;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Patrick Hand', cursive;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--doodle-blue);
+      padding: 20px;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+    }
+
+    .desktop-container {
+      width: 100%;
+      max-width: 1100px;
+      display: grid;
+      grid-template-columns: 260px 1fr 260px;
+      gap: 24px;
+    }
+
+    /* Hand-Drawn / Rough Edge Border Box */
+    .doodle-box {
+      background: var(--white);
+      border: 3px solid var(--doodle-blue);
+      /* Organic border radii create a hand-sketched illusion */
+      border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
+      box-shadow: 3px 4px 0px var(--doodle-blue);
+      padding: 16px;
+      margin-bottom: 24px;
+    }
+
+    /* Window Header Styling */
+    .win-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 2px solid var(--doodle-blue);
+      padding-bottom: 8px;
+      margin-bottom: 12px;
+      font-size: 22px;
+      font-weight: bold;
+    }
+
+    .win-controls {
+      display: flex;
+      gap: 6px;
+      font-size: 16px;
+    }
+
+    .win-btn {
+      width: 18px;
+      height: 18px;
+      border: 2px solid var(--doodle-blue);
+      border-radius: 5px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      line-height: 1;
+      cursor: pointer;
+    }
+
+    /* Sketch Input and Buttons */
+    textarea {
+      width: 100%;
+      height: 70px;
+      border: 2px solid var(--doodle-blue);
+      border-radius: 185px 15px 200px 15px/15px 200px 15px 185px;
+      padding: 10px;
+      font-size: 20px;
+      color: var(--doodle-blue);
+      outline: none;
+      resize: none;
+      background: var(--doodle-light);
+    }
+
+    .hand-btn {
+      background: var(--white);
+      border: 2px solid var(--doodle-blue);
+      border-radius: 205px 15px 215px 15px/15px 215px 15px 205px;
+      padding: 4px 16px;
+      font-size: 20px;
+      font-weight: bold;
+      color: var(--doodle-blue);
+      cursor: pointer;
+      box-shadow: 2px 2px 0px var(--doodle-blue);
+    }
+
+    .hand-btn:active {
+      transform: translate(2px, 2px);
+      box-shadow: 0px 0px 0px;
+    }
+
+    /* Feed Layout */
+    .post {
+      border-bottom: 2px dashed var(--doodle-blue);
+      padding-bottom: 12px;
+      margin-bottom: 16px;
+    }
+
+    .post:last-child {
+      border-bottom: none;
+      margin-bottom: 0;
+      padding-bottom: 0;
+    }
+
+    .post-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 8px;
+    }
+
+    .avatar-doodle {
+      width: 42px;
+      height: 42px;
+      border: 2px solid var(--doodle-blue);
+      border-radius: 50% 45% 55% 40%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      background: var(--doodle-light);
+    }
+
+    .post-body {
+      font-size: 22px;
+      line-height: 1.3;
+    }
+
+    .post-actions {
+      display: flex;
+      gap: 20px;
+      margin-top: 10px;
+      font-size: 18px;
+      cursor: pointer;
+    }
+
+    /* Progress Bar Sketch */
+    .sketch-progress-container {
+      border: 2px solid var(--doodle-blue);
+      border-radius: 12px;
+      height: 22px;
+      padding: 2px;
+      background: var(--white);
+      margin-top: 8px;
+    }
+
+    .sketch-progress-fill {
+      background: var(--doodle-blue);
+      height: 100%;
+      width: 65%;
+      border-radius: 8px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="desktop-container">
+    
+    <!-- LEFT COLUMN -->
+    <aside>
+      <div class="doodle-box">
+        <div class="win-header">
+          <span>[ Profile ]</span>
+          <div class="win-controls">
+            <div class="win-btn">-</div>
+            <div class="win-btn">x</div>
+          </div>
+        </div>
+        <div style="text-align: center;">
+          <div class="avatar-doodle" style="width: 70px; height: 70px; margin: 0 auto 10px; font-size: 36px;">🎨</div>
+          <h2 style="font-size: 26px;">@floating_dot</h2>
+          <p style="font-size: 18px; margin-top: 4px;">vector collection // doodling ideas ✏️</p>
+        </div>
+      </div>
+
+      <div class="doodle-box">
+        <div class="win-header">
+          <span>[ Status ]</span>
+          <div class="win-controls"><div class="win-btn">x</div></div>
+        </div>
+        <p style="font-size: 20px; text-align: center;">LOADING...</p>
+        <div class="sketch-progress-container">
+          <div class="sketch-progress-fill"></div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- CENTER FEED -->
+    <main>
+      <div class="doodle-box">
+        <div class="win-header">
+          <span>[ New Post ]</span>
+          <div class="win-controls"><div class="win-btn">x</div></div>
+        </div>
+        <textarea placeholder="Type something here..."></textarea>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 10px;">
+          <span style="font-size: 22px;">🔍 📁 💾 🔔</span>
+          <button class="hand-btn">OK</button>
+        </div>
+      </div>
+
+      <div class="doodle-box">
+        <div class="win-header">
+          <span>[ Feed Timeline ]</span>
+          <div class="win-controls"><div class="win-btn">x</div></div>
+        </div>
+
+        <div class="post">
+          <div class="post-header">
+            <div class="avatar-doodle">✏️</div>
+            <div>
+              <strong style="font-size: 22px;">@floating_dot</strong>
+              <span style="font-size: 18px; opacity: 0.8;">· 10m</span>
+            </div>
+          </div>
+          <div class="post-body">
+            Just added a new vector doodle collection set to Canva! Check out set:nAFHT8yGHcl 🎨
+          </div>
+          <div class="post-actions">
+            <span>💬 5</span> <span>🔄 12</span> <span>♡ 42</span>
+          </div>
+        </div>
+
+        <div class="post">
+          <div class="post-header">
+            <div class="avatar-doodle">🌐</div>
+            <div>
+              <strong style="font-size: 22px;">@web_sketch</strong>
+              <span style="font-size: 18px; opacity: 0.8;">· 2h</span>
+            </div>
+          </div>
+          <div class="post-body">
+            Trying out organic borders using border-radius magic to get that authentic hand-drawn feel.
+          </div>
+          <div class="post-actions">
+            <span>💬 1</span> <span>🔄 3</span> <span>♡ 18</span>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- RIGHT COLUMN -->
+    <aside>
+      <div class="doodle-box">
+        <div class="win-header">
+          <span>[ Search ]</span>
+          <div class="win-controls"><div class="win-btn">x</div></div>
+        </div>
+        <div style="display: flex; gap: 8px;">
+          <input type="text" placeholder="Search..." style="width: 100%; border: 2px solid var(--doodle-blue); border-radius: 10px; padding: 4px 8px; font-size: 18px; outline: none;" />
+          <button class="hand-btn" style="padding: 2px 8px;">🔍</button>
+        </div>
+      </div>
+
+      <div class="doodle-box">
+        <div class="win-header">
+          <span>[ Quick Note ]</span>
+          <div class="win-controls"><div class="win-btn">x</div></div>
+        </div>
+        <p style="font-size: 20px;">
+          RECOLOR | SIZE ADJUST
+        </p>
+        <p style="font-size: 18px; margin-top: 8px; opacity: 0.8;">
+          Keep creating and sketching daily! ✨
+        </p>
+      </div>
+    </aside>
+
+  </div>
+
+</body>
+</html>

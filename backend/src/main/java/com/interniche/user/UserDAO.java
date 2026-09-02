@@ -1,8 +1,8 @@
 package com.interniche.user;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-
 import java.util.Optional;
+
+import org.springframework.data.jpa.repository.JpaRepository;
 
 // Không cần viết SQL! Spring Data JPA ĐỌC TÊN PHƯƠNG THỨC và tự sinh query:
 //   findByFirebaseUid("abc") -> SELECT * FROM user WHERE user_firebaseuid = 'abc'
@@ -15,4 +15,6 @@ public interface UserDAO extends JpaRepository<User, Integer> {
     Optional<User> findByFirebaseUid(String firebaseUid);
 
     Optional<User> findByUserName(String userName);
+
+    Optional<User> findByUserId(Integer userId);
 }

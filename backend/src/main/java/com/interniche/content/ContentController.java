@@ -2,6 +2,7 @@ package com.interniche.content;
 
 import com.interniche.common.exception.UnauthorizedException;
 import com.interniche.content.dto.CreateContentRequest;
+import com.interniche.content.dto.ContentWithAuthor;
 import com.interniche.content.dto.UpdateContentRequest;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
@@ -41,7 +42,7 @@ public class ContentController {
     // List post theo niche: GET /api/v1/contents?nichId=1
     // Nếu không có nichId -> trả toàn bộ
     @GetMapping
-    public List<Content> list(@RequestParam(required = false) Integer nichId) {
+    public List<ContentWithAuthor> list(@RequestParam(required = false) Integer nichId) {
         if (nichId != null) {
             return contentService.listByNiche(nichId);
         }
