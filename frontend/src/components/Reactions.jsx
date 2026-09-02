@@ -37,9 +37,9 @@ function Reactions({ likeCount = 0, dislikeCount = 0 }) {
   };
 
   return (
-    <div className="post-actions">
+    <div className="content-actions">
       <button
-        className={`post-action ${isLiked ? "active" : ""}`}
+        className={`content-action ${isLiked ? "active" : ""}`}
         onClick={handleLike}
       >
         👍
@@ -47,7 +47,7 @@ function Reactions({ likeCount = 0, dislikeCount = 0 }) {
       </button>
 
       <button
-        className={`post-action ${isDisliked ? "active" : ""}`}
+        className={`content-action ${isDisliked ? "active" : ""}`}
         onClick={handleDislike}
       >
         👎

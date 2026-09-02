@@ -1,10 +1,10 @@
-import { PersonCircle } from "react-bootstrap-icons";
+import { Question } from "react-bootstrap-icons";
 
 function AvatarImage({ src, isUser }) {
 
   return (
     <div
-      className={`avatar-container border border-2 ${
+      className={`avatar-container border border-1 ${
         isUser ? "rounded-circle" : "rounded-1"
       }`}
     >
@@ -14,7 +14,7 @@ function AvatarImage({ src, isUser }) {
           className="w-100 h-100 object-fit-cover"
         />
       ) : (
-        <PersonCircle size={60} />
+        <Question size={60} />
       )}
     </div>
   );

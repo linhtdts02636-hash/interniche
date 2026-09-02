@@ -1,26 +1,55 @@
 import { useEffect, useState } from "react";
-import { getContent } from "../api";
+import { getContent, createContent, editContentById, deleteContentById } from "../api";
 
 function useContent() {
-  const [posts, setPosts] = useState([]);
+  const [contents, setContents] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     let cancelled = false;
     getContent()
       .then((data) => {
-        if (!cancelled) setPosts(data);
+        if (!cancelled) setContents(data);
       })
       .catch(() => {
-        if (!cancelled) setPosts([]);
+        if (!cancelled) setContents([]);
       })
       .finally(() => {
         if (!cancelled) setLoading(false);
       });
-      return () => {cancelled = true}
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
-  return {posts, loading};
+  const reload = async () => {
+    setLoading(true);
+    try {
+      const data = await getContent();
+      setContents(data);
+    } catch {
+      setContents([]);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const create = async (contTitle, contBody, contType, nichId) => {
+    await createContent(contTitle, contBody, contType, nichId);
+    await reload();
+  };
+
+  const edit = async (id, contTitle, contBody, contType) => {
+    await editContentById(id, contTitle, contBody, contType);
+    await reload();
+  };
+
+  const remove = async (id) => {
+    await deleteContentById(id);
+    setContents((prev) => prev.filter((item) => item.content.contId !== id));
+  };
+
+  return { contents, loading, create, edit, remove };
 }
 
 export default useContent;

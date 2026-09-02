@@ -4,11 +4,11 @@ import ContentList from "../../features/content/components/ContentList";
 import portrait from "./portrait.jpg"
 
 function DiscoveryPage() {
-  const [isPostCreateOpen, setIsPostCreateOpen] = useState(false);
 
   return (
 <>
-<ContentList></ContentList>
+<ContentList
+nichId={1}></ContentList>
 </>
   );
 }

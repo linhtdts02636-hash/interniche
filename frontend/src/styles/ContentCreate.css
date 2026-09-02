@@ -1,8 +1,8 @@
 /* =========================
-   Post Create Overlay
+   Content Create Overlay
    ========================= */
 
-.post-create-overlay {
+.content-create-overlay {
   position: fixed;
 
   inset: 0;
@@ -21,10 +21,10 @@
 }
 
 /* =========================
-   Post Create Modal
+   Content Create Modal
    ========================= */
 
-.post-create-modal {
+.content-create-modal {
   width: 100%;
 
   max-width: 600px;
@@ -50,13 +50,13 @@
    Header
    ========================= */
 
-.post-create-header {
+.content-create-header {
   padding: 12px 16px;
 
   border-bottom: 1px solid var(--color-border);
 }
 
-.post-create-close {
+.content-create-close {
   width: 40px;
 
   height: 40px;
@@ -80,7 +80,7 @@
   cursor: pointer;
 }
 
-.post-create-close:hover {
+.content-create-close:hover {
   background-color: var(--color-surface-hover);
 
   color: var(--color-text-primary);
@@ -90,13 +90,13 @@
    Body
    ========================= */
 
-.post-create-body {
+.content-create-body {
   padding: 16px;
 
   overflow-y: auto;
 }
 
-.post-create-input {
+.content-create-input {
   display: flex;
 
   align-items: flex-start;
@@ -104,7 +104,7 @@
   gap: 12px;
 }
 
-.post-create-input textarea {
+.content-create-input textarea {
   min-height: 100px;
 
   height: 120px;
@@ -120,11 +120,11 @@
   resize: none;
 }
 
-.post-create-input textarea::placeholder {
+.content-create-input textarea::placeholder {
   color: var(--color-text-muted);
 }
 
-.post-create-input textarea:focus {
+.content-create-input textarea:focus {
   background-color: transparent;
 
   color: var(--color-text-primary);
@@ -140,7 +140,7 @@
    Image Preview
    ========================= */
 
-.post-image-preview {
+.content-image-preview {
   position: relative;
 
   width: 100%;
@@ -156,7 +156,7 @@
   border-radius: 12px;
 }
 
-.post-image-preview img {
+.content-image-preview img {
   display: block;
 
   width: auto;
@@ -170,7 +170,7 @@
   border-radius: 12px;
 }
 
-.post-image-remove {
+.content-image-remove {
   position: absolute;
 
   top: 10px;
@@ -200,29 +200,29 @@
   cursor: pointer;
 }
 
-.post-image-remove:hover {
+.content-image-remove:hover {
   background-color: var(--color-surface-hover);
 
   color: var(--color-text-primary);
 }
 
 /* =========================
-   Post Create Footer
+   Content Create Footer
    ========================= */
 
-.post-create-footer {
+.content-create-footer {
   padding: 10px 16px;
 
   border-top: 1px solid var(--color-border);
 }
 
-.post-create-tools {
+.content-create-tools {
   gap: 4px;
 }
 
-/* Các nút công cụ */
+/* CA�c nA�t cA'ng c��� */
 
-.post-create-tool {
+.content-create-tool {
   width: 36px;
 
   height: 36px;
@@ -246,17 +246,17 @@
   cursor: pointer;
 }
 
-.post-create-tool:hover {
+.content-create-tool:hover {
   color: var(--color-primary-hover);
 
   background-color: var(--color-overlay-light);
 }
 
 /* =========================
-   Post Create Button
+   Content Create Button
    ========================= */
 
-.post-create-submit {
+.content-create-submit {
   padding: 6px 18px;
 
   color: var(--color-text-primary);
@@ -270,7 +270,7 @@
   cursor: pointer;
 }
 
-.post-create-submit:hover {
+.content-create-submit:hover {
   color: var(--color-text-primary);
 
   background-color: var(--color-primary-hover);

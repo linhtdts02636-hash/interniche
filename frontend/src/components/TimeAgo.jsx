@@ -12,7 +12,7 @@ function TimeAgo({ createdAt }) {
     return () => clearInterval(interval);
   }, [createdAt]);
 
-  return <span className="post-time">{timeAgo}</span>;
+  return <span className="content-time">{timeAgo}</span>;
 }
 
 export default TimeAgo;

@@ -139,7 +139,7 @@ a { text-decoration: none; color: var(--color-text-primary); }
   overflow-x: hidden;
   word-break: break-word;
 
-  /* Tạo khoảng cách giữa sidebar và bài post */
+  /* Tạo khoảng cách giữa sidebar và bài content */
   padding: 20px;
   box-sizing: border-box;
 }
@@ -205,9 +205,9 @@ a { text-decoration: none; color: var(--color-text-primary); }
 }
 
 
-/* CSS cho component Post */
-/* Container của Post */
-.post {
+/* CSS cho component content */
+/* Container của content */
+.content {
   width: 100%;
   max-width: 640px;
   margin: 0 auto 16px;
@@ -218,7 +218,7 @@ a { text-decoration: none; color: var(--color-text-primary); }
 
 
 
-.post-time {
+.content-time {
   display: block;
   margin-bottom: 6px;
 
@@ -226,7 +226,7 @@ a { text-decoration: none; color: var(--color-text-primary); }
   font-size: 12px;
 }
 
-.post h3 {
+.content h3 {
   margin: 0 0 8px;
   font-size: 18px;
   line-height: 1.3;
@@ -238,20 +238,20 @@ a { text-decoration: none; color: var(--color-text-primary); }
   gap: 12px;
 }
 
-.content-header .post-time {
+.content-header .content-time {
   display: inline;
   margin-bottom: 0;
 }
 
 /* CSS cho content */
-.post-content {
+.content-content {
   text-align: justify;
   line-height:0.7;
   color: var(--color-text-primary);
 }
 
-/*CSS hình ảnh post */
-/* .post-image {
+/*CSS hình ảnh content */
+/* .content-image {
   display: block;
   width: 100%;
   max-width: 100%;
@@ -261,7 +261,7 @@ a { text-decoration: none; color: var(--color-text-primary); }
   object-fit: contain;
 } */
 
-/* .post-image {
+/* .content-image {
   display: block;
   width: 100%;
   height: auto;
@@ -271,7 +271,7 @@ a { text-decoration: none; color: var(--color-text-primary); }
 } */
 
 /* Khung chứa ảnh */
-/* .post-image-wrapper {
+/* .content-image-wrapper {
   width: 100%;
   max-height: 500px;
 
@@ -288,7 +288,7 @@ a { text-decoration: none; color: var(--color-text-primary); }
 /* Ảnh */
 
 /* Ảnh hiển thị full chiều rộng khối nội dung: luôn chạm 2 góc, crop trên/dưới */
-.post-image {
+.content-image {
   display: block;
 
   width: calc(100% + 40px);
@@ -304,14 +304,14 @@ a { text-decoration: none; color: var(--color-text-primary); }
 }
 
 /* CSS cho nút like và dislike */
-.post-actions {
+.content-actions {
   display: flex;
   align-items: center;
   gap: 12px;
   margin-top: 10px;
 }
 
-.post-action {
+.content-action {
   display: flex;
   align-items: center;
   gap: 5px;
@@ -329,11 +329,11 @@ a { text-decoration: none; color: var(--color-text-primary); }
   transition: background-color 0.2s ease, color 0.2s ease;
 }
 
-.post-action.active {
+.content-action.active {
   font-weight: bold;
 }
 
-.post-action:hover {
+.content-action:hover {
   background-color: var(--color-surface-hover);
   color: var(--color-text-primary);
 }
@@ -354,8 +354,66 @@ a { text-decoration: none; color: var(--color-text-primary); }
   color: var(--color-link)
 }
 
+/* CSS cho nút ... actions menu trên mỗi content */
+.content-menu {
+  position: relative;
+  margin-left: auto;
+}
+
+.content-menu-toggle {
+  border: none;
+  background: none;
+  color: var(--color-text-secondary);
+  font-size: 20px;
+  line-height: 1;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 50%;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.content-menu-toggle:hover {
+  background-color: var(--color-surface-hover);
+  color: var(--color-text-primary);
+}
+
+.content-menu-dropdown {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 4px);
+  z-index: 10;
+
+  min-width: 120px;
+  padding: 4px 0;
+
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.content-menu-dropdown button {
+  display: block;
+  width: 100%;
+  padding: 8px 12px;
+  border: none;
+  background: none;
+  text-align: left;
+  cursor: pointer;
+  color: var(--color-text-primary);
+  transition: background-color 0.2s ease;
+}
+
+.content-menu-dropdown button:hover {
+  background-color: var(--color-surface-hover);
+}
+
+.content-menu-dropdown button:last-child {
+  color: #e0245e;
+}
+
 @media (min-width: 768px) {
-  .post {
+  .content {
     width: 80%;
   }
 }
