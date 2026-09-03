@@ -6,4 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface MemberDAO extends JpaRepository<Member, MemberId> {
 
     boolean existsByUserIdAndNichId(Integer userId, Integer nichId);
+
+    java.util.List<Member> findByNichId(Integer nichId);
 }
