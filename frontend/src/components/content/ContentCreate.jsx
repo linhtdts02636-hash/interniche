@@ -23,8 +23,7 @@ function ContentCreate({ isOpen, onClose, nichId, editContent, create, edit }) {
 
   const handleSubmit = async () => {
     if (isEdit) {
-      // Chế độ sửa: giữ nguyên tiêu đề cũ (không lấy title state), chỉ gửi phần body mới.
-      await edit(editContent.contId, editContent.contTitle, body.trim(), "post");
+      await edit(editContent.contId, title.trim(), body.trim(), "post");
     } else {
       await create(title.trim(), body.trim(), "post", nichId);
     }
