@@ -88,7 +88,7 @@ public class AuthService {
         profile.put("userName", user.getUserName());
         profile.put("userEmail", user.getUserEmail());
         profile.put("userAvatar", user.getUserAvatar());
-        profile.put("isAdmin", user.getUserIsAdmin());
+        profile.put("userIsAdmin", user.getUserIsAdmin());
         return profile;
     }
 }

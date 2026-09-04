@@ -1,44 +1,12 @@
-// import { PersonCircle } from "react-bootstrap-icons";
+import AvatarImage from "./AvatarImage";
+import AvatarLink from "./AvatarLink";
 
-// function Avatar({ src, type }) {
-//   return src ? (
-//     <img
-//       src={src}
-//       alt="Avatar"
-//       width="80"
-//       height="80"
-//       className={`object-fit-cover ${type === "user" ? "rounded-circle" : ""}`}
-//     />
-//   ) : (
-//     <PersonCircle
-//       size={80}
-//       className={type === "user" ? "rounded-circle" : ""}
-//     />
-//   );
-// }
-
-// export default Avatar;
-
-import { PersonCircle } from "react-bootstrap-icons";
-
-function Avatar({ src, type }) {
-  const isUser = type === "user";
-
+function Avatar({id, isUser, name, src, isAdmin}) {
   return (
-    <div
-      className={`avatar-container border border-3 ${
-        isUser ? "rounded-circle" : "rounded-2"
-      }`}
-    >
-      {src ? (
-        <img
-          src={src}
-          alt="Avatar"
-          className="w-100 h-100 object-fit-cover"
-        />
-      ) : (
-        <PersonCircle size={60} />
-      )}
+    <div className="d-flex align-items-center gap-1">
+      <AvatarImage src={src} isUser={isUser}></AvatarImage>
+
+      <AvatarLink id={id} isUser={isUser} name={name} isAdmin={isAdmin}></AvatarLink>
     </div>
   );
 }
