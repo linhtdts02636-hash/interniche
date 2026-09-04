@@ -23,9 +23,7 @@ function useContent() {
     };
   }, []);
 
-  // Nạp lại toàn bộ danh sách từ server.
-  // Được gọi lại sau mỗi thao tác tạo/sửa/xoá thay vì tự cập nhật state,
-  // để UI luôn phản ánh đúng dữ liệu đã được server xác nhận.
+    // Reload để UI luôn khớp với dữ liệu server sau mỗi mutation
   const reload = async () => {
     setLoading(true);
     try {
@@ -38,8 +36,7 @@ function useContent() {
     }
   };
 
-  // Mỗi thao tác mutation đều theo cùng một quy ước:
-  // 1) đợi API thành công, 2) mới gọi reload() để đồng bộ lại từ DB.
+  // Mỗi mutation: đợi API thành công rồi reload() đồng bộ lại từ DB
   const create = async (contTitle, contBody, contType, nichId) => {
     await createContent(contTitle, contBody, contType, nichId);
     await reload();

@@ -1,24 +1,26 @@
 import { useState, useRef, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import TimeAgo from "../TimeAgo";
-import Reactions from "../Reactions";
+import Reactions from "../Reaction";
 import Avatar from "../avatar/Avatar";
-import ContentCreate from "./ContentCreate";
 
+// Presentational card: chỉ render và gọi callback lên parent (onEdit/onDelete).
+// Không chứa logic nghiệp vụ, không biết gì về form sửa hay API.
 function Content({
   content,
   author,
   canModify,
+  onEdit,
   onDelete,
-  edit,
   image,
   likeCount,
   dislikeCount,
 }) {
+  // Chỉ state giao diện của menu "..." (mở/đóng) — không phải logic nghiệp vụ.
   const [menuOpen, setMenuOpen] = useState(false);
-  const [editOpen, setEditOpen] = useState(false);
   const menuRef = useRef(null);
 
+  // Đóng menu khi click ra ngoài
   useEffect(() => {
     function handleClickOutside(e) {
       if (menuRef.current && !menuRef.current.contains(e.target)) {
@@ -58,7 +60,7 @@ function Content({
                   type="button"
                   onClick={() => {
                     setMenuOpen(false);
-                    setEditOpen(true);
+                    onEdit(content);
                   }}
                 >
                   Edit
@@ -92,14 +94,6 @@ function Content({
           comment
         </NavLink>
       </div>
-
-      <ContentCreate
-        key={editOpen ? content.contId : "closed"}
-        isOpen={editOpen}
-        onClose={() => setEditOpen(false)}
-        editContent={content}
-        edit={edit}
-      />
     </article>
   );
 }

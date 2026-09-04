@@ -11,25 +11,28 @@ import com.interniche.common.exception.NotFoundException;
 import com.interniche.common.exception.UnauthorizedException;
 import com.interniche.content.dto.ContentWithAuthor;
 import com.interniche.niche.NicheDAO;
+import com.interniche.reaction.Reaction;
+import com.interniche.reaction.ReactionDAO;
+import com.interniche.reaction.ReactionType;
 import com.interniche.user.User;
 import com.interniche.user.UserDAO;
 
-// Service xử lý logic tạo/sửa/xoá post (content)
 @Service
 public class ContentService {
 
     private final ContentDAO contentDAO;
     private final NicheDAO nicheDAO;
     private final UserDAO userDAO;
-    
+    private final ReactionDAO reactionDAO;
 
-    public ContentService(ContentDAO contentDAO, NicheDAO nicheDAO, UserDAO userDAO) {
+    public ContentService(ContentDAO contentDAO, NicheDAO nicheDAO, UserDAO userDAO,
+                          ReactionDAO reactionDAO) {
         this.contentDAO = contentDAO;
         this.nicheDAO = nicheDAO;
         this.userDAO = userDAO;
+        this.reactionDAO = reactionDAO;
     }
 
-    // Tạo post/creation — Yêu cầu 3: cont_type do client gửi ('post' hoặc 'creation')
     public Content create(String contTitle, String contBody, ContentType contType,
                           Integer nichId, Integer sessionUserId) {
         if (nicheDAO.findById(nichId).isEmpty()) {
@@ -37,41 +40,70 @@ public class ContentService {
         }
 
         Content content = new Content();
-        content.setUserId(sessionUserId); // tác giả = người đang đăng nhập
+        content.setUserId(sessionUserId);
         content.setNichId(nichId);
         content.setContTitle(contTitle.trim());
         content.setContBody(contBody);
-        content.setContType(contType); // ← YÊU CẦU 3: set enum do client chọn
+        content.setContType(contType);
         content.setContCreatedAt(LocalDateTime.now());
-        content.setContEditedAt(null); // mới tạo chưa có lần sửa nào
+        content.setContEditedAt(null);
         return contentDAO.save(content);
     }
 
     public List<ContentWithAuthor> listByNiche(Integer nichId) {
-    return contentDAO.findByNichId(nichId).stream()
-        .map(c -> new ContentWithAuthor(c, userDAO.findByUserId(c.getUserId()).orElse(null)))
-        .toList();
+        List<Content> contents = contentDAO.findByNichId(nichId);
+        Map<Integer, User> users = loadUsers(contents);
+        Map<Integer, long[]> counts = reactionCounts(contents);
+        return contents.stream()
+            .map(c -> new ContentWithAuthor(c, users.get(c.getUserId()),
+                    countFor(counts, c.getContId())[0], countFor(counts, c.getContId())[1]))
+            .toList();
     }
 
 
     public List<ContentWithAuthor> listAll() {
-    List<Content> contents = contentDAO.findAll();
-    List<Integer> ids = contents.stream().map(Content::getUserId).distinct().toList();
-    Map<Integer, User> users = userDAO.findAllById(ids).stream()
-        .collect(Collectors.toMap(User::getUserId, u -> u));
-    return contents.stream()
-        .map(c -> new ContentWithAuthor(c, users.get(c.getUserId())))
-        .toList();
+        List<Content> contents = contentDAO.findAll();
+        Map<Integer, User> users = loadUsers(contents);
+        Map<Integer, long[]> counts = reactionCounts(contents);
+        return contents.stream()
+            .map(c -> new ContentWithAuthor(c, users.get(c.getUserId()),
+                    countFor(counts, c.getContId())[0], countFor(counts, c.getContId())[1]))
+            .toList();
+    }
 
-}
+    // Content không có reaction sẽ không có key trong map nên phải getOrDefault
+    private long[] countFor(Map<Integer, long[]> counts, Integer contId) {
+        return counts.getOrDefault(contId, new long[]{0L, 0L});
+    }
+
+    private Map<Integer, User> loadUsers(List<Content> contents) {
+        List<Integer> ids = contents.stream().map(Content::getUserId).distinct().toList();
+        return userDAO.findAllById(ids).stream()
+            .collect(Collectors.toMap(User::getUserId, u -> u));
+    }
+
+    // Map<contId, long[]{likes, dislikes}> từ một query gộp để tránh N+1
+    private Map<Integer, long[]> reactionCounts(List<Content> contents) {
+        return reactionDAO.findByContIdIn(
+                    contents.stream().map(Content::getContId).toList())
+            .stream()
+            .collect(Collectors.groupingBy(
+                Reaction::getContId,
+                Collectors.collectingAndThen(Collectors.toList(), list -> {
+                    long likes = list.stream()
+                        .filter(r -> r.getReacType() == ReactionType.like).count();
+                    long dislikes = list.stream()
+                        .filter(r -> r.getReacType() == ReactionType.dislike).count();
+                    return new long[]{likes, dislikes};
+                })));
+    }
 
     public Content getById(Integer contId) {
         return contentDAO.findById(contId)
                 .orElseThrow(() -> new NotFoundException("Content not found"));
     }
 
-    // Chỉ tác giả mới được sửa
-    //khi edit thì set cont_editedat = thời điểm hiện tại
+    // Chỉ tác giả mới được sửa; khi edit set cont_editedat = hiện tại
     public Content update(Integer contId, String contTitle, String contBody,
                           ContentType contType, Integer sessionUserId) {
         Content content = getById(contId);
@@ -86,7 +118,7 @@ public class ContentService {
         if (contType != null) {
             content.setContType(contType);
         }
-        content.setContEditedAt(LocalDateTime.now()); // ← đánh dấu thời gian sửa
+        content.setContEditedAt(LocalDateTime.now());
 
         return contentDAO.save(content);
     }

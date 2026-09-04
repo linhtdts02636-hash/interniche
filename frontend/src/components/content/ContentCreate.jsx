@@ -6,29 +6,25 @@ import "../../styles/style.css";
 // Khớp với VARCHAR(100) của cont_title
 const titleMax = 100;
 
-function ContentCreate({ isOpen, onClose, nichId, editContent, create, edit }) {
-  // isEdit quyết định toàn bộ luồng: false = tạo mới (dùng nichId),
-  // true = sửa content đã có (giữ nguyên id, bỏ qua nichId).
-  const isEdit = !!editContent;
-
-  // State khởi tạo từ editContent khi sửa, rỗng khi tạo.
-  const [body, setContent] = useState(editContent ? editContent.contBody : "");
-  const [title, setTitle] = useState(editContent ? editContent.contTitle : "");
+// Presentational form. Không có logic nghiệp vụ:
+// state (title/body), căn lề submit và quyết định create/edit đều do parent đưa vào qua props.
+function ContentCreate({
+  isOpen,
+  onClose,
+  title,
+  body,
+  onTitleChange,
+  onBodyChange,
+  submitLabel,
+  canSubmit,
+  onSubmit,
+}) {
+  // Ảnh chỉ để xem trước cục bộ, chưa upload qua API.
   const [image, setImage] = useState(null);
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) setImage(file);
-  };
-
-  const handleSubmit = async () => {
-    if (isEdit) {
-      // Chế độ sửa: giữ nguyên tiêu đề cũ (không lấy title state), chỉ gửi phần body mới.
-      await edit(editContent.contId, editContent.contTitle, body.trim(), "post");
-    } else {
-      await create(title.trim(), body.trim(), "post", nichId);
-    }
-    onClose();
   };
 
   if (!isOpen) {
@@ -57,11 +53,11 @@ function ContentCreate({ isOpen, onClose, nichId, editContent, create, edit }) {
               <textarea
                 className="form-control content-create-title"
                 value={title}
-                // slice(0, titleMax) chặn cứng ở 100 ký tự khi gõ, không cho vượt giới hạn DB
-                onChange={(e) => setTitle(e.target.value.slice(0, titleMax))}
+                // slice(0, titleMax) chặn cứng ở 100 ký tự khi gõ
+                onChange={(e) => onTitleChange(e.target.value.slice(0, titleMax))}
                 placeholder="What are you posting about?"
               />
-              {/* Bộ đếm ký tự; thêm class near-limit để đổi màu khi chạm giới hạn */}
+              {/* Bộ đếm ký tự; thêm class near-limit khi chạm giới hạn */}
               <span
                 className={`content-create-title-counter ${
                   title.length >= titleMax ? "near-limit" : ""
@@ -72,19 +68,18 @@ function ContentCreate({ isOpen, onClose, nichId, editContent, create, edit }) {
             </div>
           </div>
 
-          {/* Input file ẩn ở footer kích hoạt qua <label htmlFor>, xử lý qua handleImageChange */}
           <div className="content-create-input d-flex gap-3">
             <textarea
               className="form-control"
               value={body}
-              onChange={(e) => setContent(e.target.value)}
+              onChange={(e) => onBodyChange(e.target.value)}
               placeholder="Share with everyone about your day..."
             />
           </div>
 
           {image && (
             <div className="content-image-preview">
-              {/* URL.createObjectURL tạo URL tạm để xem trước file cục bộ chưa upload */}
+              {/* URL.createObjectURL tạo URL tạm để xem trước file cục bộ */}
               <img src={URL.createObjectURL(image)} alt="Preview" />
 
               <button
@@ -150,14 +145,13 @@ function ContentCreate({ isOpen, onClose, nichId, editContent, create, edit }) {
             </button>
           </div>
 
-          {/* disabled khi body rỗng: không cho post nội dung trống, chỉ dựa vào body chứ không phải title */}
           <button
             type="button"
             className="btn btn-primary content-create-submit"
-            onClick={handleSubmit}
-            disabled={!body.trim()}
+            onClick={onSubmit}
+            disabled={!canSubmit}
           >
-            {isEdit ? "Save" : "Post"}
+            {submitLabel}
           </button>
         </div>
       </div>

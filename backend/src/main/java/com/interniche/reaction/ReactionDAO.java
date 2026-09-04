@@ -14,5 +14,7 @@ public interface ReactionDAO extends JpaRepository<Reaction, Integer> {
 
     List<Reaction> findByContId(Integer contId);
 
+    List<Reaction> findByContIdIn(List<Integer> contIds);
+
     List<Reaction> findByCommId(Integer commId);
 }

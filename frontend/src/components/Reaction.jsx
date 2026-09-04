@@ -1,11 +1,19 @@
 import { useState } from "react";
 import { HandThumbsDown, HandThumbsUp, HandThumbsDownFill, HandThumbsUpFill } from "react-bootstrap-icons";
+import { useEffect } from "react";
 
-function Reactions({ likeCount = 0, dislikeCount = 0 }) {
+function Reaction({ likeCount, dislikeCount }) {
   const [likes, setLikes] = useState(likeCount);
   const [dislikes, setDislikes] = useState(dislikeCount);
   const [isLiked, setIsLiked] = useState(false);
   const [isDisliked, setIsDisliked] = useState(false);
+  const hasInteracted = isLiked || isDisliked; 
+useEffect(() => {
+  if (!isLiked && !isDisliked) {
+    setLikes(likeCount);
+    setDislikes(dislikeCount);
+  }
+}, [likeCount, dislikeCount, isLiked, isDisliked]);
 
   const handleLike = () => {
     if (isLiked) {
@@ -58,4 +66,4 @@ function Reactions({ likeCount = 0, dislikeCount = 0 }) {
   );
 }
 
-export default Reactions;
+export default Reaction;
