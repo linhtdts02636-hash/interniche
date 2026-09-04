@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { HandThumbsDown, HandThumbsUp, HandThumbsDownFill, HandThumbsUpFill } from "react-bootstrap-icons";
 
 function Reactions({ likeCount = 0, dislikeCount = 0 }) {
   const [likes, setLikes] = useState(likeCount);
@@ -39,18 +40,18 @@ function Reactions({ likeCount = 0, dislikeCount = 0 }) {
   return (
     <div className="content-actions">
       <button
-        className={`content-action ${isLiked ? "active" : ""}`}
+        className={`content-action btn ${isLiked ? "active" : ""}`}
         onClick={handleLike}
       >
-        👍
+        {isLiked ? <HandThumbsUpFill /> : <HandThumbsUp />}
         <span>{likes}</span>
       </button>
 
       <button
-        className={`content-action ${isDisliked ? "active" : ""}`}
+        className={`content-action btn ${isDisliked ? "active" : ""}`}
         onClick={handleDislike}
       >
-        👎
+        {isDisliked ? <HandThumbsDownFill /> : <HandThumbsDown />}
         <span>{dislikes}</span>
       </button>
     </div>
